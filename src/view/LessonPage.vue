@@ -1,15 +1,30 @@
 <template>
-    <div>
-      <div class="bg-[#7556F7] rounded-b-[35px] h-[60px] relative">
-          <h1 class=" container text-[white] text-[20px] text-center pt-[15px] font-bold absolute">Уроки по JAVA</h1>      
-        </div>
+  <div>
+    <div class="bg-[#7556F7] rounded-b-[35px] h-[60px] fixed z-10 w-full">
+      <h1
+        class="container text-[white] text-[20px] text-center pt-[15px] font-bold"
+      >
+        Уроки по JAVA
+      </h1>
     </div>
+    <div class="pt-[70px]">
+      <LessonList
+        class="pt-[15px]"
+        v-for="i in 3"
+        :key="i"
+        :id="i"
+      ></LessonList>
+    </div>
+  </div>
 </template>
 
 <script>
-    export default {
-        
-    }
+import LessonList from "../components/LessonList.vue";
+export default {
+  components: {
+    LessonList,
+  },
+};
 </script>
 
 <style lang="scss" scoped>
