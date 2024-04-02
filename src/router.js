@@ -5,7 +5,7 @@ import {
 import CreateAccount from './components/CreateAccount.vue';
 import Login from './components/Login.vue';
 import HomePage from './view/HomePage.vue';
-
+import LessonPage from './view/LessonPage.vue';
 const router = createRouter({
     history: createWebHistory(),
     routes: [{
@@ -21,6 +21,11 @@ const router = createRouter({
             path: '/login',
             name: '/login',
             component: Login,
+        },
+         {
+            path: '/lesson',
+            name: '/lesson',
+            component: LessonPage,
         },
 
     ],
