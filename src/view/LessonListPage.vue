@@ -16,13 +16,7 @@
         />
       </div>
       <p class="w-[90%] mx-[15px] text-[15px] pt-[15px]">
-        Java - это мощный и универсальный язык программирования, разработанный
-        компанией Sun Microsystems (позднее приобретенной компанией Oracle). Он
-        позволяет создавать кроссплатформенные приложения, которые могут
-        выполняться на различных устройствах, от компьютеров до мобильных
-        устройств. Java обладает строгой типизацией, обширными библиотеками и
-        высокоуровневым синтаксисом, делая его одним из самых популярных языков
-        программирования в мире
+        {{ colors }}
       </p>
     </div>
 
@@ -31,10 +25,12 @@
     >
       <ul class="flex justify-around p-4">
         <li>
-          <router-link to="/profile">Back</router-link>
+          <!-- Вызываем метод goToPreviousColor при клике на кнопку Back -->
+          <button @click="goToPreviousColor">Back</button>
         </li>
         <li>
-          <router-link to="/settings">Next</router-link>
+          <!-- Вызываем метод goToNextColor при клике на кнопку Next -->
+          <button @click="goToNextColor">Next</button>
         </li>
       </ul>
     </nav>
@@ -42,11 +38,31 @@
 </template>
 
 <script>
+import { colorsArray } from "../data";
+
 export default {
   data() {
     return {
       name: this.$route.params.id,
+      colors: colorsArray[0], // По умолчанию устанавливаем первый цвет из массива
+      currentColorIndex: 0, // Индекс текущего цвета
     };
+  },
+  methods: {
+    // Метод для перехода к предыдущему цвету
+    goToPreviousColor() {
+      if (this.currentColorIndex > 0) {
+        this.currentColorIndex--;
+        this.colors = colorsArray[this.currentColorIndex];
+      }
+    },
+    // Метод для перехода к следующему цвету
+    goToNextColor() {
+      if (this.currentColorIndex < colorsArray.length - 1) {
+        this.currentColorIndex++;
+        this.colors = colorsArray[this.currentColorIndex];
+      }
+    },
   },
 };
 </script>

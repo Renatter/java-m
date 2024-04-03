@@ -7,6 +7,10 @@ import Login from './components/Login.vue';
 import HomePage from './view/HomePage.vue';
 import LessonPage from './view/LessonPage.vue';
 import LessonListPage from './view/LessonListPage.vue';
+import VideoPage from './view/VideoPage.vue';
+import VideoListPage from './view/VideoListPage.vue';
+import TestPage from './view/TestPage.vue';
+import TestListPage from './view/TestListPage.vue';
 const router = createRouter({
     history: createWebHistory(),
     routes: [{
@@ -23,6 +27,7 @@ const router = createRouter({
             name: '/login',
             component: Login,
         },
+
         {
             path: '/lesson',
             name: '/lesson',
@@ -32,6 +37,26 @@ const router = createRouter({
             path: '/lessonListPage/:id',
             name: '/lessonListPage',
             component: LessonListPage,
+        },
+        {
+            path: '/testPage',
+            name: '/testPage   ',
+            component: TestPage,
+        },
+        {
+            path: '/testListPage/:id',
+            name: '/testListPage',
+            component: TestListPage,
+        },
+        {
+            path: '/videoPage',
+            name: '/videoPage   ',
+            component: VideoPage,
+        },
+        {
+            path: '/videoListPage/:id',
+            name: '/videoListPage',
+            component: VideoListPage,
         },
 
     ],

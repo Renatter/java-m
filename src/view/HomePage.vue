@@ -58,33 +58,38 @@
   </div>
   <div class="container">
     <h1 class="text-[25px] font-bold">Категория</h1>
-  <div class="flex flex-wrap gap-[15px] justify-evenly pt-[15px]">
-        <CategoryCard :title="i.title" :img="i.img" :router="i.router" v-for="i in category" :key="i"></CategoryCard>
-  </div>  
-</div>
-
+    <div class="flex flex-wrap gap-[15px] justify-evenly pt-[15px]">
+      <CategoryCard
+        :title="i.title"
+        :img="i.img"
+        :router="i.router"
+        v-for="i in category"
+        :key="i"
+      ></CategoryCard>
+    </div>
+  </div>
 </template>
 
 <script>
-import book from "../assets/book.png"
-import lampa from "../assets/lampa.png"
-import test from "../assets/test.png"
-import video from "../assets/video.png"
-import CategoryCard from '../components/CategoryCard.vue';
+import book from "../assets/book.png";
+import lampa from "../assets/lampa.png";
+import test from "../assets/test.png";
+import video from "../assets/video.png";
+import CategoryCard from "../components/CategoryCard.vue";
 export default {
-   data() {
-        return {
-            category: [
-                {title:'Уроки', img:book, router: '/lesson'},
-                {title:'Видео', img:video ,router: '/lesson'},
-                {title:'Тесты', img:test, router: '/lesson'},
-                {title:'Шпаргалка', img:lampa, router: '/lesson'},
-            ]
-        }
-    },
+  data() {
+    return {
+      category: [
+        { title: "Уроки", img: book, router: "/lesson" },
+        { title: "Видео", img: video, router: "/videoPage" },
+        { title: "Тесты", img: test, router: "/testPage" },
+        { title: "Шпаргалка", img: lampa, router: "/lesson" },
+      ],
+    };
+  },
   components: {
-    CategoryCard
-  }
+    CategoryCard,
+  },
 };
 </script>
 
