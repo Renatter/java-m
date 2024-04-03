@@ -7,21 +7,26 @@
     </div>
     <div class="pt-[70px] w-[95%] mx-[15px]">
       <div v-if="currentQuestionIndex !== null">
-        <p>{{ currentQuestion.text }}</p>
-        <div
-          v-for="(option, optionIndex) in currentQuestion.options"
-          :key="optionIndex"
-          class="cursor-pointer"
-          :class="{
-            correct: isCorrect(currentQuestionIndex, optionIndex),
-            incorrect:
-              isSelected(currentQuestionIndex, optionIndex) &&
-              !isCorrect(currentQuestionIndex, optionIndex),
-            selected: isSelected(currentQuestionIndex, optionIndex),
-          }"
-          @click="selectOption(currentQuestionIndex, optionIndex)"
-        >
-          {{ option }}
+        <p class="text-center text-[35px] font-bold mb-[15px]">
+          {{ currentQuestion.text }}
+        </p>
+        <div class="flex flex-wrap gap-[20px] justify-between">
+          <div
+            v-for="(option, optionIndex) in currentQuestion.options"
+            :key="optionIndex"
+            class="x border-[1px] border-purple-500 text-[15px] h-[150px] w-[150px] text-center font-bold pt-[55px] rounded-[15px]"
+            :class="{
+              correct: isCorrect(currentQuestionIndex, optionIndex),
+              incorrect:
+                isSelected(currentQuestionIndex, optionIndex) &&
+                !isCorrect(currentQuestionIndex, optionIndex),
+              selected: isSelected(currentQuestionIndex, optionIndex),
+            }"
+            @click="selectOption(currentQuestionIndex, optionIndex)"
+            style="text-align: center"
+          >
+            {{ option }}
+          </div>
         </div>
       </div>
     </div>
@@ -45,6 +50,13 @@
         </li>
       </ul>
     </nav>
+
+    <div
+      v-if="showCorrectMessage"
+      class="text-green-500 text-center font-bold pt-[15px]"
+    >
+      Вы ответили правильно
+    </div>
   </div>
 </template>
 
@@ -85,6 +97,7 @@ export default {
         },
       ],
       currentQuestionIndex: 0,
+      showCorrectMessage: false,
     };
   },
   computed: {
@@ -97,6 +110,13 @@ export default {
   methods: {
     selectOption(questionIndex, optionIndex) {
       this.questions[questionIndex].selectedOption = optionIndex;
+      if (this.isCorrect(questionIndex, optionIndex)) {
+        this.showCorrectMessage = true;
+        setTimeout(() => {
+          this.goToNext();
+          this.showCorrectMessage = false;
+        }, 1000);
+      }
     },
     isSelected(questionIndex, optionIndex) {
       return this.questions[questionIndex].selectedOption === optionIndex;
@@ -131,7 +151,7 @@ export default {
 }
 .selected {
   cursor: pointer;
-  border: 2px solid transparent;
+  border: 3px solid transparent;
 }
 .correct {
   border-color: green;
