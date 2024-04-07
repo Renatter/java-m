@@ -37,13 +37,13 @@
 </template>
 
 <script>
-import { colorsArray } from "../data";
+import { javaCourse } from "../data";
 
 export default {
   data() {
     return {
       name: this.$route.params.id,
-      colors: colorsArray[0], // По умолчанию устанавливаем первый цвет из массива
+      colors: javaCourse[0], // По умолчанию устанавливаем первый цвет из массива
       currentColorIndex: 0, // Индекс текущего цвета
     };
   },
@@ -52,14 +52,14 @@ export default {
     goToPreviousColor() {
       if (this.currentColorIndex > 0) {
         this.currentColorIndex--;
-        this.colors = colorsArray[this.currentColorIndex];
+        this.colors = javaCourse[this.currentColorIndex];
       }
     },
     // Метод для перехода к следующему цвету
     goToNextColor() {
-      if (this.currentColorIndex < colorsArray.length - 1) {
+      if (this.currentColorIndex < javaCourse.length - 1) {
         this.currentColorIndex++;
-        this.colors = colorsArray[this.currentColorIndex];
+        this.colors = javaCourse[this.currentColorIndex];
       }
     },
   },

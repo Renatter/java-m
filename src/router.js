@@ -11,6 +11,9 @@ import VideoPage from './view/VideoPage.vue';
 import VideoListPage from './view/VideoListPage.vue';
 import TestPage from './view/TestPage.vue';
 import TestListPage from './view/TestListPage.vue';
+import {
+    getIsAuthenticated,
+} from './firebase/firebase';
 const router = createRouter({
     history: createWebHistory(),
     routes: [{
@@ -63,10 +66,10 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    const isAuthenticated = true;
+    const isAuthenticated = getIsAuthenticated() || localStorage.getItem('isAuthenticated');
 
     if (!isAuthenticated && to.path !== '/login' && to.path !== '/create') {
-        next('/login'); // Если пользователь не аутентифицирован и пытается зайти на любую страницу, кроме /login и /create, перенаправляем его на страницу входа
+        next('/login');
     } else {
         next();
     }

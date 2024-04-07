@@ -1,22 +1,25 @@
 <template>
   <div>
     <div class="bg-[#7556F7] rounded-b-[35px] h-[60px] fixed z-10 w-full">
-      <h1 class="text-[white] text-[20px] text-center pt-[15px] font-bold">
-        Язык программирования Java
+      <h1 class="text-[white] text-[17px] text-center pt-[15px] font-bold">
+        {{ item.desc[currentColorIndex].name }}
       </h1>
     </div>
     <div class="pt-[70px]">
       <div
-        class="bg-[#7656f791] w-[90%] rounded-[25px] h-[250px] mx-[15px] flex justify-center items-center"
+        class="w-[90%] rounded-[25px] h-[250px] mx-[15px] flex justify-center items-center"
       >
         <img
-          class="w-[150px] h-[150px] object-contain"
-          src="https://static-00.iconduck.com/assets.00/java-icon-1511x2048-6ikx8301.png"
+          class="object-contain rounded-[25px] h-[100%]"
+          :src="item.desc[currentColorIndex].img"
           alt=""
         />
       </div>
-      <p class="w-[90%] mx-[15px] text-[15px] pt-[15px]">
-        {{ colors }}
+      <p class="text-center text-[25px] text-[#7556F7]">
+        {{ currentColorIndex + 1 }}/ {{ item.desc.length }}
+      </p>
+      <p class="w-[90%] mx-[15px] text-[17px] pt-[15px]">
+        <span v-html="formatText(item.desc[currentColorIndex].text)"></span>
       </p>
     </div>
 
@@ -26,11 +29,11 @@
       <ul class="flex justify-around p-4">
         <li>
           <!-- Вызываем метод goToPreviousColor при клике на кнопку Back -->
-          <button @click="goToPreviousColor">Back</button>
+          <button @click="goToPrevious">Back</button>
         </li>
         <li>
           <!-- Вызываем метод goToNextColor при клике на кнопку Next -->
-          <button @click="goToNextColor">Next</button>
+          <button @click="goToNext">Next</button>
         </li>
       </ul>
     </nav>
@@ -38,35 +41,78 @@
 </template>
 
 <script>
-import { colorsArray } from "../data";
+import {
+  doc,
+  deleteDoc,
+  updateDoc,
+  getDoc,
+  query,
+  where,
+  collection,
+  onSnapshot,
+  getDocs,
+  getDocsFromServer,
+} from "firebase/firestore";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+  listAll,
+} from "firebase/storage";
+
+import { db, auth, storage } from "../firebase/firebase";
+import { javaCourse } from "../data";
 
 export default {
   data() {
     return {
       name: this.$route.params.id,
-      colors: colorsArray[0], // По умолчанию устанавливаем первый цвет из массива
-      currentColorIndex: 0, // Индекс текущего цвета
+      colors: javaCourse[0],
+      currentColorIndex: 0,
+      item: {},
     };
   },
   methods: {
     // Метод для перехода к предыдущему цвету
-    goToPreviousColor() {
+    goToPrevious() {
       if (this.currentColorIndex > 0) {
         this.currentColorIndex--;
-        this.colors = colorsArray[this.currentColorIndex];
       }
     },
     // Метод для перехода к следующему цвету
-    goToNextColor() {
-      if (this.currentColorIndex < colorsArray.length - 1) {
+    goToNext() {
+      if (this.currentColorIndex < this.item.desc.length - 1) {
         this.currentColorIndex++;
-        this.colors = colorsArray[this.currentColorIndex];
       }
     },
+    // Метод для форматирования текста
+    formatText(text) {
+      // Используем регулярное выражение для поиска и замены обратных кавычек на стилизованный текст
+      return text.replace(
+        /`([^`]+)`/g,
+        '<span class="code bg-[#7556F7] text-[white] p-[4px]  rounded-[5px]" >$1</span>'
+      );
+    },
+  },
+  async created() {
+    const javaQuery = query(
+      collection(db, "javaText"),
+      where("id", "==", +this.name)
+    );
+    onSnapshot(javaQuery, (querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        this.item = doc.data();
+      });
+    });
   },
 };
 </script>
 
 <style lang="scss" scoped>
-/* Здесь вы можете добавить стили по вашему усмотрению для нижнего меню */
+.code {
+  background-color: #c41616;
+  border-radius: 3px;
+  padding: 2px 4px;
+}
 </style>
