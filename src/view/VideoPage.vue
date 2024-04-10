@@ -8,16 +8,42 @@
       </h1>
     </div>
     <div class="pt-[70px]">
-      <VideoList class="pt-[15px]" v-for="i in 3" :key="i" :id="i"></VideoList>
+      <VideoList
+        class="pt-[15px]"
+        v-for="(i, index) in item"
+        :key="i"
+        :id="index"
+        :java="i"
+      ></VideoList>
     </div>
   </div>
 </template>
 
 <script>
 import VideoList from "../components/VideoList.vue";
+import { onSnapshot, collection } from "firebase/firestore";
+import { db, auth } from "../firebase/firebase";
 export default {
+  data() {
+    return {
+      item: [],
+    };
+  },
   components: {
     VideoList,
+  },
+  async created() {
+    const q = collection(db, "javaText");
+
+    onSnapshot(q, (querySnapshot) => {
+      this.item = []; // Очищаем массив перед добавлением новых данных
+      querySnapshot.forEach((doc) => {
+        this.item.push(doc.data());
+      });
+
+      // Сортировка списка по возрастанию id
+      this.item.sort((a, b) => a.id - b.id);
+    });
   },
 };
 </script>

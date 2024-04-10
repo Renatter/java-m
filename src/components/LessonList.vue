@@ -4,8 +4,8 @@
       class="c w-[95%] h-[120px] border-[3px] border-[#7556F7] rounded-[25px] flex relative"
     >
       <img
-        class="w-[70px] h-[70px] object-contain rounded-[15px] ml-[15px]"
-        src="https://static-00.iconduck.com/assets.00/java-icon-1511x2048-6ikx8301.png"
+        class="w-[100px] h-[100px] object-contain rounded-[15px] ml-[15px]"
+        :src="java.img"
         alt=""
       />
       <div class="ml-[15px] w-[100%]">

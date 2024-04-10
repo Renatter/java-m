@@ -1,25 +1,24 @@
 <template>
-  <div>
+  <div class="mb-[85px]">
     <div class="bg-[#7556F7] rounded-b-[35px] h-[60px] fixed z-10 w-full">
       <h1 class="text-[white] text-[17px] text-center pt-[15px] font-bold">
         {{ item.desc[currentColorIndex].name }}
       </h1>
     </div>
     <div class="pt-[70px]">
-      <div
-        class="w-[90%] rounded-[25px] h-[250px] mx-[15px] flex justify-center items-center"
-      >
-        <img
-          class="object-contain rounded-[25px] h-[100%]"
-          :src="item.desc[currentColorIndex].img"
-          alt=""
-        />
-      </div>
+      <img
+        class="object-contain w-[90%] h-[250px] mx-[15px] rounded-[25px]"
+        :src="item.desc[currentColorIndex].img"
+        alt=""
+      />
       <p class="text-center text-[25px] text-[#7556F7]">
         {{ currentColorIndex + 1 }}/ {{ item.desc.length }}
       </p>
-      <p class="w-[90%] mx-[15px] text-[17px] pt-[15px]">
-        <span v-html="formatText(item.desc[currentColorIndex].text)"></span>
+      <p class="w-[90%] mx-[15px] text-[15px] pt-[15px]" style="">
+        <span
+          class="t"
+          v-html="formatText(item.desc[currentColorIndex].text)"
+        ></span>
       </p>
     </div>
 
@@ -63,7 +62,6 @@ import {
 
 import { db, auth, storage } from "../firebase/firebase";
 import { javaCourse } from "../data";
-
 export default {
   data() {
     return {
@@ -87,12 +85,14 @@ export default {
       }
     },
     // Метод для форматирования текста
+    // Метод для форматирования текста
     formatText(text) {
-      // Используем регулярное выражение для поиска и замены обратных кавычек на стилизованный текст
-      return text.replace(
+      // Используем регулярное выражение для замены обратных кавычек и добавления переносов строки
+      const formattedText = text.replace(
         /`([^`]+)`/g,
-        '<span class="code bg-[#7556F7] text-[white] p-[4px]  rounded-[5px]" >$1</span>'
+        '<span class="code bg-[#7556F7] text-[white] p-[4px]  rounded-[5px]">$1</span>'
       );
+      return formattedText.replace(/\n/g, "<br/>");
     },
   },
   async created() {
@@ -114,5 +114,11 @@ export default {
   background-color: #c41616;
   border-radius: 3px;
   padding: 2px 4px;
+}
+@media (max-width: 385px) {
+  .t {
+    font-size: 13px;
+    line-height: 20px;
+  }
 }
 </style>

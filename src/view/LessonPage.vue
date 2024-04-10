@@ -21,8 +21,8 @@
 
 <script>
 import { onSnapshot, collection } from "firebase/firestore";
-import LessonList from "../components/LessonList.vue";
 import { db, auth } from "../firebase/firebase";
+import LessonList from "../components/LessonList.vue";
 export default {
   data() {
     return {
