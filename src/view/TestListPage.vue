@@ -6,7 +6,7 @@
       </h1>
     </div>
     <div class="pt-[70px] w-[95%] mx-[15px]">
-      <div v-if="currentQuestionIndex !== null">
+      <div v-if="currentQuestion">
         <p class="text-center text-[35px] font-bold mb-[15px]">
           {{ currentQuestion.text }}
         </p>
@@ -14,7 +14,7 @@
           <div
             v-for="(option, optionIndex) in currentQuestion.options"
             :key="optionIndex"
-            class="x border-[1px] border-purple-500 text-[15px] h-[150px] w-[150px] text-center font-bold pt-[55px] rounded-[15px]"
+            class="option border-[1px] border-purple-500 text-[15px] h-[150px] w-[150px] text-center font-bold pt-[55px] rounded-[15px]"
             :class="{
               correct: isCorrect(currentQuestionIndex, optionIndex),
               incorrect:
@@ -23,7 +23,6 @@
               selected: isSelected(currentQuestionIndex, optionIndex),
             }"
             @click="selectOption(currentQuestionIndex, optionIndex)"
-            style="text-align: center"
           >
             {{ option }}
           </div>
@@ -57,47 +56,32 @@
     >
       Вы ответили правильно
     </div>
+     <div
+      v-if="showFalseMes"
+      class="text-[red] text-center font-bold pt-[15px]"
+    >
+      Вы ответили не правильно
+    </div>
+
+    <div v-if="currentQuestionIndex === questions.length">
+      <p class="text-center text-[35px] font-bold mb-[15px]">
+        Тест завершен. Вы ответили правильно на {{ totalCorrectAnswers }} из {{ questions.length }} вопросов.
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase/firebase";
+
 export default {
   data() {
     return {
-      name: this.$route.params.id,
-      questions: [
-        {
-          text: "Что такое JVM в контексте языка Java?",
-          options: [
-            "Java Virtual Memory",
-            "Java Virtual Machine",
-            "Java Visual Module",
-            "Java Variable Manager",
-          ],
-          correctIndex: 1,
-          selectedOption: null,
-        },
-        {
-          text: "Как объявить переменную целочисленного типа в Java?",
-          options: ["int x;", "integer x;", "var x;", "float x;"],
-          correctIndex: 0,
-          selectedOption: null,
-        },
-        {
-          text: "Какой ключевое слово используется для создания нового экземпляра класса в Java?",
-          options: ["new", "create", "instance", "object"],
-          correctIndex: 0,
-          selectedOption: null,
-        },
-        {
-          text: "Какой из следующих операторов используется для ветвления в Java?",
-          options: ["switch", "while", "for", "do-while"],
-          correctIndex: 0,
-          selectedOption: null,
-        },
-      ],
       currentQuestionIndex: 0,
       showCorrectMessage: false,
+      showFalseMes:false,
+      questions: [],
     };
   },
   computed: {
@@ -106,18 +90,41 @@ export default {
         ? this.questions[this.currentQuestionIndex]
         : null;
     },
+    totalCorrectAnswers() {
+      return this.questions.filter(
+        (question, index) => this.isCorrect(index, question.selectedOption)
+      ).length;
+    },
   },
   methods: {
-    selectOption(questionIndex, optionIndex) {
-      this.questions[questionIndex].selectedOption = optionIndex;
-      if (this.isCorrect(questionIndex, optionIndex)) {
-        this.showCorrectMessage = true;
-        setTimeout(() => {
-          this.goToNext();
-          this.showCorrectMessage = false;
-        }, 1000);
+selectOption(questionIndex, optionIndex) {
+  this.questions[questionIndex].selectedOption = optionIndex;
+  if (this.isCorrect(questionIndex, optionIndex)) {
+    this.showCorrectMessage = true;
+    setTimeout(() => {
+      if (this.currentQuestionIndex < this.questions.length - 1) {
+        this.goToNext(); // Перенаправление на следующий вопрос
+      } else {
+        this.currentQuestionIndex = this.questions.length; // Устанавливаем индекс для завершения теста
       }
-    },
+      this.showCorrectMessage = false;
+    }, 1000);
+  } else {
+    this.showFalseMes = true
+     setTimeout(() => {
+      if (this.currentQuestionIndex < this.questions.length - 1) {
+        this.goToNext(); // Перенаправление на следующий вопрос
+      } else {
+        this.currentQuestionIndex = this.questions.length; // Устанавливаем индекс для завершения теста
+      }
+      this.showFalseMes = false;
+    }, 1000);
+  }
+},
+
+
+
+
     isSelected(questionIndex, optionIndex) {
       return this.questions[questionIndex].selectedOption === optionIndex;
     },
@@ -130,6 +137,8 @@ export default {
     goToNext() {
       if (this.currentQuestionIndex < this.questions.length - 1) {
         this.currentQuestionIndex++;
+      } else {
+        this.currentQuestionIndex = this.questions.length; // Устанавливаем индекс для завершения теста
       }
     },
     goToPrevious() {
@@ -138,13 +147,25 @@ export default {
       }
     },
   },
+  async created() {
+    try {
+      const docRef = doc(db, "questions", "java1");
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        this.questions = data.questions;
+      } else {
+        console.log("No such document!");
+      }
+    } catch (error) {
+      console.error("Error getting document:", error);
+    }
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.question {
-  margin-bottom: 20px;
-}
 .option {
   margin-right: 10px;
   cursor: pointer;

@@ -21,7 +21,7 @@
 
 <script>
 import VideoList from "../components/VideoList.vue";
-import { onSnapshot, collection } from "firebase/firestore";
+import { onSnapshot, collection, addDoc, doc, setDoc } from "firebase/firestore";
 import { db, auth } from "../firebase/firebase";
 export default {
   data() {
@@ -44,8 +44,10 @@ export default {
       // Сортировка списка по возрастанию id
       this.item.sort((a, b) => a.id - b.id);
     });
-  },
-};
+  }
+}
+
+
 </script>
 
 <style lang="scss" scoped>
