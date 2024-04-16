@@ -11,6 +11,7 @@ import VideoPage from './view/VideoPage.vue';
 import VideoListPage from './view/VideoListPage.vue';
 import TestPage from './view/TestPage.vue';
 import TestListPage from './view/TestListPage.vue';
+import ChatRoom from './view/ChatRoom.vue';
 import {
     getIsAuthenticated,
 } from './firebase/firebase';
@@ -35,6 +36,11 @@ const router = createRouter({
             path: '/lesson',
             name: '/lesson',
             component: LessonPage,
+        },
+        {
+            path: '/ChatRoom',
+            name: '/ChatRoom',
+            component: ChatRoom,
         },
         {
             path: '/lessonListPage/:id',

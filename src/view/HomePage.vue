@@ -86,7 +86,7 @@ export default {
         { title: "Уроки", img: book, router: "/lesson" },
         { title: "Видео", img: video, router: "/videoPage" },
         { title: "Тесты", img: test, router: "/testPage" },
-        { title: "Шпаргалка", img: lampa, router: "/lesson" },
+        { title: "Чат", img: lampa, router: "/ChatRoom" },
       ],
     };
   },
