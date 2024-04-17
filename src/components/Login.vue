@@ -3,19 +3,20 @@
     <div class="container">
       <div class="center-content pt-[50px]">
         <img class="" src="../assets/logo.png" alt="" srcset="" />
-        <h1 class="text-2xl text-center">Login!</h1>
+        <h1 class="text-2xl text-center">Кіру!</h1>
       </div>
       <div class="mt-[30px]">
         <label
           for="first_name"
           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >Email</label
+          >Почта</label
         >
         <input
+        v-model="email"
           type="text"
           id="first_name"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="John"
+        
           required
         />
       </div>
@@ -27,26 +28,53 @@
           >Password</label
         >
         <input
+        v-model="password"
           type="text"
           id="first_name"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="John"
+         
           required
         />
       </div>
-      <router-link to="/create">Создать аккаунт</router-link>
+      <router-link to="/create">Тiркелу</router-link>
       <button
+      @click="login"
         type="button"
         class="mt-[15px] text-white w-[100%] bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
       >
-        Login
+        Кіру
       </button>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { auth, db, setIsAuthenticated } from "../firebase/firebase";
+export default {
+  data() {
+    return {
+      email:'',
+      password:''
+    }
+  },
+  methods:{
+    async login() {
+      try {
+        await signInWithEmailAndPassword(auth, this.email, this.password);
+            setIsAuthenticated(true);
+        localStorage.setItem("isAuthenticated", "true");
+        this.$router.push("/");
+      }
+       catch (error) {
+        console.log("Ошибка при регистрации пользователя:", error);
+    }
+  }}
+};
 </script>
 
 <style lang="scss" scoped>

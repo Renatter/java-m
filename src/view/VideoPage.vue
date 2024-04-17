@@ -4,7 +4,7 @@
       <h1
         class="container text-[white] text-[20px] text-center pt-[15px] font-bold"
       >
-        Видео по JAVA
+       JAVA-дан видео
       </h1>
     </div>
     <div class="pt-[70px]">

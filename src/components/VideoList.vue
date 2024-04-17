@@ -18,7 +18,7 @@
         </div>
 
         <h1 class="font-bold text-[#FF5D5D] text-[17px]">{{ java.name }}</h1>
-        <p class="text-[gray] text-[18px]">{{ java.page }} страниц</p>
+        <p class="text-[gray] text-[18px]">{{ java.page }} бет</p>
       </div>
     </div>
   </router-link>

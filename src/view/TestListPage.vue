@@ -2,19 +2,19 @@
   <div>
     <div class="bg-[#FF5D5D] rounded-b-[35px] h-[60px] fixed z-10 w-full">
       <h1 class="text-[white] text-[20px] text-center pt-[15px] font-bold">
-        Язык программирования Java
+       {{name}}
       </h1>
     </div>
     <div class="pt-[70px] w-[95%] mx-[15px]">
       <div v-if="currentQuestion">
-        <p class="text-center text-[35px] font-bold mb-[15px]">
+        <p class="text-center text-[25px] font-bold mb-[15px]">
           {{ currentQuestion.text }}
         </p>
         <div class="flex flex-wrap gap-[20px] justify-between">
           <div
             v-for="(option, optionIndex) in currentQuestion.options"
             :key="optionIndex"
-            class="option border-[1px] border-purple-500 text-[15px] h-[150px] w-[150px] text-center font-bold pt-[55px] rounded-[15px]"
+            class="option border-[1px] border-purple-500 text-[15px] h-[150px] w-[150px] text-center font-bold pt-[15px] px-[5px] rounded-[15px]"
             :class="{
               correct: isCorrect(currentQuestionIndex, optionIndex),
               incorrect:
@@ -54,25 +54,26 @@
       v-if="showCorrectMessage"
       class="text-green-500 text-center font-bold pt-[15px]"
     >
-      Вы ответили правильно
+     Сіз дұрыс жауап бердіңіз
     </div>
      <div
       v-if="showFalseMes"
       class="text-[red] text-center font-bold pt-[15px]"
     >
-      Вы ответили не правильно
+      Сіз дұрыс емес  жауап бердіңіз
     </div>
 
     <div v-if="currentQuestionIndex === questions.length">
-      <p class="text-center text-[35px] font-bold mb-[15px]">
-        Тест завершен. Вы ответили правильно на {{ totalCorrectAnswers }} из {{ questions.length }} вопросов.
+      <p class="text-center text-[35px] font-bold mb-[15px] pt-[155px]">
+        Тест аяқталды. Сіз {{ questions.length }}  сұрақтың <span class="text-green-500"> {{ totalCorrectAnswers }}</span> дұрыс жауап бердіңіз.
       </p>
     </div>
   </div>
+
 </template>
 
 <script>
-import { doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 
 export default {
@@ -82,6 +83,8 @@ export default {
       showCorrectMessage: false,
       showFalseMes:false,
       questions: [],
+        id: this.$route.params.id,
+        name:''
     };
   },
   computed: {
@@ -148,19 +151,20 @@ selectOption(questionIndex, optionIndex) {
     },
   },
   async created() {
-    try {
-      const docRef = doc(db, "questions", "java1");
-      const docSnap = await getDoc(docRef);
+    console.log(this.id)
+       const q = query(
+      collection(db, "questions"),
+      where("name", "==", this.id)
+    );
+     const querySnapshot = await getDocs(q);
 
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        this.questions = data.questions;
-      } else {
-        console.log("No such document!");
-      }
-    } catch (error) {
-      console.error("Error getting document:", error);
-    }
+     if (!querySnapshot.empty){
+            const doc = querySnapshot.docs[0];
+       console.log(doc)
+      
+       this.questions = doc.data().questions
+       this.name = doc.data().name
+     }
   },
 };
 </script>
