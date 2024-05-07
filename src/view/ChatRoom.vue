@@ -1,7 +1,7 @@
 <template>
   <div class="bg-[#7556F7] rounded-b-[35px] h-[60px] fixed z-10 w-full">
     <h1 class="text-[white] text-[17px] text-center pt-[15px] font-bold">
-      Чат
+      Пiкiр
     </h1>
   </div>
   <div class="w-[90%] mx-[15px] relative pt-[70px]">

@@ -14,7 +14,7 @@
           <div
             v-for="(option, optionIndex) in currentQuestion.options"
             :key="optionIndex"
-            class="option border-[1px] border-purple-500 text-[15px] h-[150px] w-[150px] text-center font-bold pt-[55px] rounded-[15px]"
+            class="option border-[1px] border-purple-500 text-[15px] h-[200px] w-[200px] text-center font-bold pt-[25px] rounded-[15px]"
             :class="{
               correct: isCorrect(currentQuestionIndex, optionIndex),
               incorrect:
@@ -54,33 +54,43 @@
       v-if="showCorrectMessage"
       class="text-green-500 text-center font-bold pt-[15px]"
     >
-      Вы ответили правильно
+      Сіз дұрыс жауап бердіңіз
     </div>
-     <div
-      v-if="showFalseMes"
-      class="text-[red] text-center font-bold pt-[15px]"
-    >
-      Вы ответили не правильно
+    <div v-if="showFalseMes" class="text-[red] text-center font-bold pt-[15px]">
+      Сіз дұрыс емес деп жауап бердіңіз
     </div>
 
     <div v-if="currentQuestionIndex === questions.length">
       <p class="text-center text-[35px] font-bold mb-[15px]">
-        Тест завершен. Вы ответили правильно на {{ totalCorrectAnswers }} из {{ questions.length }} вопросов.
+        Тест аяқталды. Сіз {{ questions.length }} сұрақтың
+        {{ totalCorrectAnswers }} дұрыс жауап бердіңіз.
       </p>
     </div>
   </div>
 </template>
 
 <script>
-import { doc, getDoc } from "firebase/firestore";
+import {
+  doc,
+  deleteDoc,
+  updateDoc,
+  getDoc,
+  query,
+  where,
+  collection,
+  onSnapshot,
+  getDocs,
+  getDocsFromServer,
+} from "firebase/firestore";
 import { db } from "../firebase/firebase";
 
 export default {
   data() {
     return {
+      id: this.$route.params.id,
       currentQuestionIndex: 0,
       showCorrectMessage: false,
-      showFalseMes:false,
+      showFalseMes: false,
       questions: [],
     };
   },
@@ -91,39 +101,36 @@ export default {
         : null;
     },
     totalCorrectAnswers() {
-      return this.questions.filter(
-        (question, index) => this.isCorrect(index, question.selectedOption)
+      return this.questions.filter((question, index) =>
+        this.isCorrect(index, question.selectedOption)
       ).length;
     },
   },
   methods: {
-selectOption(questionIndex, optionIndex) {
-  this.questions[questionIndex].selectedOption = optionIndex;
-  if (this.isCorrect(questionIndex, optionIndex)) {
-    this.showCorrectMessage = true;
-    setTimeout(() => {
-      if (this.currentQuestionIndex < this.questions.length - 1) {
-        this.goToNext(); // Перенаправление на следующий вопрос
+    selectOption(questionIndex, optionIndex) {
+      this.questions[questionIndex].selectedOption = optionIndex;
+      if (this.isCorrect(questionIndex, optionIndex)) {
+        this.showCorrectMessage = true;
+        setTimeout(() => {
+          if (this.currentQuestionIndex < this.questions.length - 1) {
+            this.goToNext(); // Перенаправление на следующий вопрос
+          } else {
+            this.currentQuestionIndex = this.questions.length; // Устанавливаем индекс для завершения теста
+          }
+          this.showCorrectMessage = false;
+        }, 1000);
       } else {
-        this.currentQuestionIndex = this.questions.length; // Устанавливаем индекс для завершения теста
+        this.showFalseMes = true;
+        setTimeout(() => {
+          if (this.currentQuestionIndex < this.questions.length - 1) {
+            this.goToNext(); // Перенаправление на следующий вопрос
+          } else {
+            this.currentQuestionIndex = this.questions.length; // Устанавливаем индекс для завершения теста
+          }
+          this.showFalseMes = false;
+        }, 1000);
       }
-      this.showCorrectMessage = false;
-    }, 1000);
-  } else {
-    this.showFalseMes = true
-     setTimeout(() => {
-      if (this.currentQuestionIndex < this.questions.length - 1) {
-        this.goToNext(); // Перенаправление на следующий вопрос
-      } else {
-        this.currentQuestionIndex = this.questions.length; // Устанавливаем индекс для завершения теста
-      }
-      this.showFalseMes = false;
-    }, 1000);
-  }
-},
-
-
-
+    },
 
     isSelected(questionIndex, optionIndex) {
       return this.questions[questionIndex].selectedOption === optionIndex;
@@ -148,19 +155,15 @@ selectOption(questionIndex, optionIndex) {
     },
   },
   async created() {
-    try {
-      const docRef = doc(db, "questions", "java1");
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        this.questions = data.questions;
-      } else {
-        console.log("No such document!");
-      }
-    } catch (error) {
-      console.error("Error getting document:", error);
-    }
+    const javaQuery = query(
+      collection(db, "questions"),
+      where("name", "==", this.id)
+    );
+    onSnapshot(javaQuery, (querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        this.questions = doc.data().questions;
+      });
+    });
   },
 };
 </script>

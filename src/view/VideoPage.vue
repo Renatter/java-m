@@ -4,7 +4,7 @@
       <h1
         class="container text-[white] text-[20px] text-center pt-[15px] font-bold"
       >
-        Видео по JAVA
+        Java бейне
       </h1>
     </div>
     <div class="pt-[70px]">
@@ -21,7 +21,13 @@
 
 <script>
 import VideoList from "../components/VideoList.vue";
-import { onSnapshot, collection, addDoc, doc, setDoc } from "firebase/firestore";
+import {
+  onSnapshot,
+  collection,
+  addDoc,
+  doc,
+  setDoc,
+} from "firebase/firestore";
 import { db, auth } from "../firebase/firebase";
 export default {
   data() {
@@ -44,10 +50,8 @@ export default {
       // Сортировка списка по возрастанию id
       this.item.sort((a, b) => a.id - b.id);
     });
-  }
-}
-
-
+  },
+};
 </script>
 
 <style lang="scss" scoped>

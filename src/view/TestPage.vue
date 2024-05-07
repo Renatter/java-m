@@ -1,23 +1,49 @@
 <template>
   <div>
-    <div class="bg-[#FF5D5D] rounded-b-[35px] h-[60px] fixed z-10 w-full">
+    <div class="bg-[#a8d524] rounded-b-[35px] h-[60px] fixed z-10 w-full">
       <h1
         class="container text-[white] text-[20px] text-center pt-[15px] font-bold"
       >
-        ТЕСТ по JAVA
+        JAVA тестілері
       </h1>
     </div>
     <div class="pt-[70px]">
-      <TestList class="pt-[15px]" v-for="i in 3" :key="i" :id="i"></TestList>
+      <TestList
+        class="pt-[15px]"
+        v-for="(i, index) in item"
+        :key="i"
+        :id="index"
+        :java="i"
+      ></TestList>
     </div>
   </div>
 </template>
 
 <script>
+import { onSnapshot, collection } from "firebase/firestore";
+import { db, auth } from "../firebase/firebase";
 import TestList from "../components/TestList.vue";
 export default {
   components: {
     TestList,
+  },
+  data() {
+    return {
+      item: [],
+    };
+  },
+  async created() {
+    const q = collection(db, "questions");
+
+    onSnapshot(q, (querySnapshot) => {
+      this.item = []; // Очищаем массив перед добавлением новых данных
+      querySnapshot.forEach((doc) => {
+        this.item.push(doc.data());
+      });
+
+      // Сортировка списка по возрастанию id
+      this.item.sort((a, b) => a.id - b.id);
+    });
   },
 };
 </script>

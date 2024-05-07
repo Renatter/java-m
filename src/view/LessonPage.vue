@@ -4,7 +4,7 @@
       <h1
         class="container text-[white] text-[20px] text-center pt-[15px] font-bold"
       >
-        Уроки по JAVA
+        JAVA сабақтары
       </h1>
     </div>
     <div class="pt-[70px]">

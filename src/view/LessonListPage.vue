@@ -20,7 +20,6 @@
           v-html="formatText(item.desc[currentColorIndex].text)"
         ></span>
       </p>
-      <div></div>
     </div>
 
     <nav
