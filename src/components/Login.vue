@@ -9,7 +9,7 @@
         <label
           for="first_name"
           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >Email</label
+          >Почта</label
         >
         <input
           v-model="email"

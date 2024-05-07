@@ -5,7 +5,7 @@
     >
       <img
         class="w-[70px] h-[70px] object-contain rounded-[15px] ml-[15px]"
-        src="https://static-00.iconduck.com/assets.00/java-icon-1511x2048-6ikx8301.png"
+        :src="java.img"
         alt=""
       />
       <div class="ml-[15px]">
@@ -18,7 +18,7 @@
         </div>
 
         <h1 class="font-bold text-[#FF5D5D] text-[17px]">{{ java.name }}</h1>
-        <p class="text-[gray] text-[18px]">{{ java.page }} страниц</p>
+        <p class="text-[gray] text-[18px]">{{ java.page }} бет</p>
       </div>
     </div>
   </router-link>

@@ -24,6 +24,11 @@ import { onSnapshot, collection } from "firebase/firestore";
 import { db, auth } from "../firebase/firebase";
 import TestList from "../components/TestList.vue";
 export default {
+  data() {
+    return {
+      item: [],
+    };
+  },
   components: {
     TestList,
   },

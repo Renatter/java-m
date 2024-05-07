@@ -1,6 +1,6 @@
 <template>
   <div
-    class="container w-[95%] h-[250px] bg-[#7556F7] m-[1px] rounded-[35px] p-[30px] text-white"
+    class="container w-[95%] h-[150px] bg-[#7556F7] m-[1px] rounded-[35px] p-[30px] text-white"
   >
     <div class="flex justify-between">
       <h1 class="text-[25px]" v-if="user">
@@ -65,6 +65,12 @@ export default {
       setIsAuthenticated(false);
       localStorage.removeItem("isAuthenticated");
       this.$router.push("/create");
+    },
+    logout() {
+      auth.signOut();
+      setIsAuthenticated(false);
+      localStorage.clear();
+      this.$router.push("/login");
     },
   },
   async created() {

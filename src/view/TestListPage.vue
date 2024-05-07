@@ -7,7 +7,7 @@
     </div>
     <div class="pt-[70px] w-[95%] mx-[15px]">
       <div v-if="currentQuestion">
-        <p class="text-center text-[35px] font-bold mb-[15px]">
+        <p class="text-center text-[25px] font-bold mb-[15px]">
           {{ currentQuestion.text }}
         </p>
         <div class="flex flex-wrap gap-[20px] justify-between">

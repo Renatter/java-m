@@ -9,7 +9,7 @@
         <label
           for="first_name"
           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >Email</label
+          >Почта</label
         >
         <input
           type="text"
@@ -23,7 +23,7 @@
         <label
           for="first_name"
           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >Name</label
+          >Имя</label
         >
         <input
           type="text"
@@ -37,7 +37,7 @@
         <label
           for="first_name"
           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >Phone number</label
+          >Номер</label
         >
         <input
           type="text"
@@ -52,7 +52,7 @@
         <label
           for="first_name"
           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >Password</label
+          >Пароль</label
         >
         <input
           type="text"

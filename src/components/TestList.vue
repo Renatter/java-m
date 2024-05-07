@@ -4,14 +4,14 @@
       class="c w-[95%] h-[120px] border-[3px] border-[#a8d524] rounded-[25px] flex relative"
     >
       <img
-        class="w-[70px] h-[70px] object-contain rounded-[15px] ml-[15px]"
-        src="https://static-00.iconduck.com/assets.00/java-icon-1511x2048-6ikx8301.png"
+        class="w-[100px] h-[100px] object-contain rounded-[15px] ml-[15px]"
+        :src="java.img"
         alt=""
       />
-      <div class="ml-[15px]">
+      <div class="ml-[15px] w-[100%]">
         <div class="absolute left-[-7px] top-[-7px] ]">
           <p
-            class="w-[35px] h-[35px] pl-[10px] pt-[5px] bg-[#ffffff] text-[#FF5D5D] rounded-[10px] border-[2px] border-[#FF5D5D] font-semibold inline-flex dark:bg-blue-200 dark:text-blue-800"
+            class="w-[35px] h-[35px] pl-[10px] pt-[5px] bg-blue-100 text-[#7556F7] rounded-[10px] border-[2px] border-[#7556F7] font-semibold inline-flex dark:bg-blue-200 dark:text-blue-800"
           >
             {{ id + 1 }}
           </p>
@@ -34,5 +34,7 @@ export default {
   padding-top: 15px;
   margin: 0 auto;
   margin-top: 15px;
+}
+@media (max-width: 436px) {
 }
 </style>
