@@ -12,6 +12,9 @@ import VideoListPage from './view/VideoListPage.vue';
 import TestPage from './view/TestPage.vue';
 import TestListPage from './view/TestListPage.vue';
 import ChatRoom from './view/ChatRoom.vue';
+import Book from './view/Book.vue';
+import Example from './view/Example.vue';
+import ExamplePage from './components/ExamplePage.vue';
 import {
     getIsAuthenticated,
 } from './firebase/firebase';
@@ -61,6 +64,21 @@ const router = createRouter({
             path: '/videoPage',
             name: '/videoPage   ',
             component: VideoPage,
+        },
+        {
+            path: '/ExamplePage/:id',
+            name: '/ExamplePage   ',
+            component: ExamplePage,
+        },
+        {
+            path: '/books',
+            name: '/books   ',
+            component: Book,
+        },
+        {
+            path: '/example',
+            name: '/example   ',
+            component: Example,
         },
         {
             path: '/videoListPage/:id',

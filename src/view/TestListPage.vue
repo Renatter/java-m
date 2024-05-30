@@ -62,9 +62,37 @@
 
     <div v-if="currentQuestionIndex === questions.length">
       <p class="text-center text-[35px] font-bold mb-[15px]">
-        Тест аяқталды. Сіз {{ questions.length }} сұрақтың
-        {{ totalCorrectAnswers }} дұрыс жауап бердіңіз.
+        Тест аяқталды. Сіз
+        <span class="text-[red]">{{ questions.length }}</span> сұрақтың
+        <span class="text-[#5ff65f]">{{ totalCorrectAnswers }}</span> дұрыс
+        жауап бердіңіз. Бұл
+        <span class="text-[#5ff65f]"
+          >{{ (totalCorrectAnswers * 100) / questions.length }}%</span
+        >.
       </p>
+      <div>
+        <p
+          v-for="(question, index) in questions"
+          :key="index"
+          class="mb-[15px] px-[10px]"
+        >
+          <span class="font-bold">{{ question.text }}</span> -
+          <span
+            :class="{
+              'text-green-500': isCorrect(index, question.selectedOption),
+              'text-red-500': !isCorrect(index, question.selectedOption),
+            }"
+          >
+            {{
+              isCorrect(index, question.selectedOption)
+                ? "Дұрыс"
+                : `Қате. Дұрыс жауап: ${
+                    question.options[question.correctIndex]
+                  }`
+            }}
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </template>

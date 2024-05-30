@@ -37,6 +37,18 @@
       </ul>
     </nav>
   </div>
+  <button
+    @click="showCompil = !showCompil"
+    class="bg-[#7556F7] hover:bg-[#7556F7] text-white font-bold py-2 px-4 border-b-4 border-[#4426bd] hover:border-[#563cc0] rounded"
+  >
+    {{ showCompil ? "Компилятор жабу" : "Компилятор корсету" }}
+  </button>
+  <iframe
+    v-if="showCompil"
+    src="https://www.jdoodle.com/embed/v0/3"
+    width="100%"
+    height="500px"
+  ></iframe>
 </template>
 
 <script>
@@ -68,6 +80,7 @@ export default {
       name: this.$route.params.id,
       colors: javaCourse[0],
       currentColorIndex: 0,
+      showCompil: false,
       item: {},
     };
   },

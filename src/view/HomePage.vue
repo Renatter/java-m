@@ -5,7 +5,7 @@
     <div class="flex justify-between">
       <h1 class="text-[25px]" v-if="user">
         {{ user.name }}, <br />
-        Қайырлы таң
+        Салем
       </h1>
       <div class="flex">
         <div
@@ -40,6 +40,8 @@
 import { auth, db, setIsAuthenticated } from "../firebase/firebase";
 import { doc, addDoc, onSnapshot, collection } from "firebase/firestore";
 import book from "../assets/book.png";
+import books from "../assets/books.png";
+import math from "../assets/math.png";
 import lampa from "../assets/lampa.png";
 import test from "../assets/test.png";
 import video from "../assets/video.png";
@@ -53,6 +55,8 @@ export default {
         { title: "Видео", img: video, router: "/videoPage" },
         { title: "Тесттер", img: test, router: "/testPage" },
         { title: "Пiкiр", img: lampa, router: "/ChatRoom" },
+        { title: "Кiтаптар", img: books, router: "/books" },
+        { title: "Есептер", img: math, router: "/example" },
       ],
     };
   },
