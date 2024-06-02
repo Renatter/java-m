@@ -56,7 +56,7 @@ export default {
         { title: "Тесттер", img: test, router: "/testPage" },
         { title: "Пiкiр", img: lampa, router: "/ChatRoom" },
         { title: "Кiтаптар", img: books, router: "/books" },
-        { title: "Есептер", img: math, router: "/example" },
+        { title: "Мысалдар", img: math, router: "/example" },
       ],
     };
   },

@@ -43,6 +43,9 @@
 <script>
 import img1 from "../assets/exm/img1.png";
 import img2 from "../assets/exm/img2.png";
+import img4 from "../assets/exm/img4.png";
+import img5 from "../assets/exm/img5.png";
+import img6 from "../assets/exm/img6.png";
 export default {
   data() {
     return {
@@ -68,17 +71,28 @@ export default {
         copy: 'import java.util.Scanner; public class Addition { public static void main(String[] args) { Scanner scanner = new Scanner(System.in);System.out.print("numbe1: "); double firstNumber = scanner.nextDouble(); System.out.print("number2: "); double secondNumber = scanner.nextDouble(); double sum = firstNumber + secondNumber;System.out.println("Result: " + sum); scanner.close(); }}',
       },
       {
-        name: "Квадрат теңдеудің барлық түбірлерін табуға арналған бағдарлама бағдарламасы",
-        text: "3",
+        name: "Факториалды табуға арналған бағдарламасы",
+        img1: img4,
+        result: "Санды енгізі:3 <br/>  Факторлық сан: 3 тен 6",
+        text: "1. Пернетақтадан деректерді енгізу үшін `Scanner`   нысаны жасалады. <br/> 2. Пайдаланушыдан нөмірді енгізу сұралады. <br/> 3. Егер сан теріс болса, бағдарлама теріс сандар үшін факториал анықталмағаны туралы хабарлама шығарады. <br/> 4. Егер сан теріс болмаса, факториалды есептеу үшін `calculateFactorial` әдісі шақырылады және нәтиже шығады. <br/>",
+        copy: ' import java.util.Scanner; public class FactorialCalculator { public static void main(String[] args) {  Scanner scanner = new Scanner(System.in); System.out.print("numb: ");int number = scanner.nextInt(); if (number < 0) {System.out.println("."); } else { long factorial = calculateFactorial(number);System.out.println("Num " + number + "toEqual " + factorial); }scanner.close();}public static long calculateFactorial(int n) {long result = 1;for (int i = 1; i <= n; i++) {   result *= i;}return result;}}',
       },
-      { name: "Факториалды табуға арналған бағдарламасы", text: "4" },
       {
         name: "Санның жұп немесе тақ екенін тексеруге арналған бағдарлама бағдарламасы",
-        text: "5",
+        img1: img5,
+        text: "1. Пернетақтадан деректерді оқу үшін `Scanner` нысаны жасалады. <br/> 2. Пайдаланушыдан нөмірді енгізу сұралады. <br/> 3. Енгізілген Сан паритетті тексеру үшін `isEven` әдісіне беріледі.  <br/> 4. `IsEven` әдісінің нәтижесіне байланысты бағдарлама санның жұп немесе тақ екендігі туралы хабарлама шығарады. <br/> 5. `Scanner` нысаны жабылады.",
+        result:
+          "Нөмірді енгізіңіз: 4 <br/> 4 саны жұп. <br/> Нөмірді енгізіңіз: 7  <br/> 7 саны тақ.",
+        copy: 'import java.util.Scanner; public class EvenOddChecker {public static void main(String[] args) {Scanner scanner = new Scanner(System.in); System.out.print("Number: "); int number = scanner.nextInt();if (isEven(number)) {System.out.println("Number " + number + " chetnim");} else {System.out.println("Number " + number + " neChetnim");} scanner.close();}public static boolean isEven(int number) { return number % 2 == 0; }}',
       },
-      { name: "Санның дәрежесін есептеу бағдарламасы", text: "6" },
-      { name: "Санның факторларын көрсететін бағдарлама", text: "7" },
-      { name: "Армстронг санын тексеруге арналған бағдарламасы", text: "8" },
+      {
+        name: "Санның дәрежесін есептеу бағдарламасы",
+        text: "`main` әдіс: <br/> 1. Пернетақтадан деректерді оқу үшін Scanner нысаны жасалады. <br/> 2. Пайдаланушыдан негізді (санды) және дәреже көрсеткішін енгізу сұралады. <br/> 3. Енгізілген мәндер санның дәрежесін есептеу үшін `calculate powe`r әдісіне беріледі. <br/> 4. Есептеу нәтижесі экранға шығарылады. <br/> 5. Сканер нысаны жабылады. <br/> `CalculatePower` әдісі:  <br/> 1. Параметрлер ретінде негізді (санды) және дәреже көрсеткішін қабылдайды. <br/> 2. Нәтиже айнымалысын 1 мәнімен инициализациялайды.  <br/> 3. For циклі нәтижені негізге көбейту арқылы көрсеткіштің абсолютті мәніне дейін 1-ден өтеді.  <br/> 4. Егер көрсеткіш теріс болса, нәтиже төңкеріледі (1 / нәтиже).  <br/> 5. Есептелген дәреже мәнін қайтарады.",
+        result:
+          "Негізді (санды) енгізіңіз: 2 <br/> Көрсеткішті енгізіңіз: 3 <br/>  2.0 3-ші дәрежеде 8.0-ге тең",
+        img1: img6,
+        copy: "import java.util.Scanner; public class PowerCalculator { public static void main(String[] args) {Scanner scanner = new Scanner(System.in); System.out.print('x'); double base = scanner.nextDouble(); System.out.print('y'); int exponent = scanner.nextInt(); double result = calculatePower(base, exponent); System.out.println(result); scanner.close();} public static double calculatePower(double base, int exponent) {double result = 1;for (int i = 1; i <= Math.abs(exponent); i++) {result *= base;}if (exponent < 0) { result = 1 / result;}return result;}}",
+      },
     ];
     this.example = data.find((item) => item.name === this.name);
   },

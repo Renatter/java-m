@@ -62,7 +62,7 @@
           required
         />
       </div>
-      <router-link to="/login">Кiру</router-link>
+
       <button
         @click="register"
         type="button"
@@ -70,6 +70,14 @@
       >
         Тiркелу
       </button>
+      <router-link to="/login">
+        <button
+          type="button"
+          class="mt-[15px] text-white w-[100%] bg-[red] hover:bg-[red] focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+        >
+          Кiру
+        </button>
+      </router-link>
     </div>
   </div>
 </template>
