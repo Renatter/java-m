@@ -81,7 +81,7 @@ export default {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
         this.isAuthenticated = true;
-        const docRef = doc(db, "userProfile", user.uid);
+        const docRef = doc(db, "users", user.uid);
         const unsubscribeCart = onSnapshot(docRef, (docSnap) => {
           if (docSnap.exists()) {
             console.log("Document data:", docSnap.data());

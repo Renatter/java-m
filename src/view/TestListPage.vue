@@ -1,8 +1,11 @@
 <template>
   <div>
     <div class="bg-[#FF5D5D] rounded-b-[35px] h-[60px] fixed z-10 w-full">
-      <h1 class="text-[white] text-[20px] text-center pt-[15px] font-bold">
-        Язык программирования Java
+      <h1
+        v-if="currentQuestion"
+        class="text-[white] text-[20px] text-center pt-[15px] font-bold"
+      >
+        JAVA тестілері
       </h1>
     </div>
     <div class="pt-[70px] w-[95%] mx-[15px]">

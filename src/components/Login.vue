@@ -24,7 +24,7 @@
         <label
           for="first_name"
           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >Password</label
+          >Кұпия сөз</label
         >
         <input
           v-model="password"

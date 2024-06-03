@@ -23,7 +23,7 @@
         <label
           for="first_name"
           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >Имя</label
+          >Аты</label
         >
         <input
           type="text"
@@ -52,7 +52,7 @@
         <label
           for="first_name"
           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >Пароль</label
+          >Кұпия сөз</label
         >
         <input
           type="text"
@@ -105,7 +105,7 @@ export default {
         await createUserWithEmailAndPassword(auth, this.email, this.password);
         await signInWithEmailAndPassword(auth, this.email, this.password);
         const currentUser = auth.currentUser;
-        await setDoc(doc(db, "userProfile", currentUser.uid), {
+        await setDoc(doc(db, "users", currentUser.uid), {
           email: this.email,
           password: this.password,
           name: this.name,
